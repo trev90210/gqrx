@@ -64,11 +64,12 @@ jobs:
         run: desktop-file-validate dk.gqrx.gqrx.desktop
       - name: Validate appstream metadata
         run: appstreamcli validate dk.gqrx.gqrx.appdata.xml
+        
   macos-build:
     name: MacOS CI
     strategy:
       matrix:
-        os: [macos-14, macos-latest]
+        os: [macos-15-intel, macos-latest]
         backend: [Portaudio, Gr-audio]
     runs-on: ${{ matrix.os }}
     steps:
@@ -96,6 +97,7 @@ jobs:
       - name: Compile
         working-directory: build
         run: make -j4
+        
   windows-build:
     runs-on: windows-latest
     name: Windows CI
@@ -156,6 +158,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Configure, compile & install
+    
       run: |
         cmake -S . -B build \
           -DCMAKE_INSTALL_PREFIX=C:/gqrx
